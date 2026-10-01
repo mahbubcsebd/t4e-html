@@ -1,0 +1,262 @@
+@media (max-width: 1024px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  
+  .hero-content {
+    max-width: 100%;
+    text-align: left;
+  }
+  
+  .feature-list li {
+    justify-content: flex-start;
+  }
+  
+  .hero-form-wrapper {
+    justify-content: center;
+  }
+  
+  .problem-box {
+    flex-direction: column;
+    padding: 32px;
+    gap: 16px;
+    text-align: left;
+  }
+
+  .problem-content {
+    display: contents;
+  }
+  
+  .problem-box .badge { order: 1; margin-bottom: 0; }
+  .problem-box .problem-title { order: 2; margin-bottom: 0; }
+  .problem-box .problem-image { order: 3; margin: 16px 0; }
+  .problem-box .problem-desc { order: 4; }
+
+  .how-it-works-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .how-it-works-content {
+    display: contents;
+  }
+  
+  .how-it-works-container .badge { order: 1; margin-bottom: 0; }
+  .how-it-works-container .section-title { order: 2; }
+  .how-it-works-media { order: 3; margin: 16px 0; }
+  .how-it-works-container .steps-list { order: 4; }
+
+  .problem-image {
+    justify-content: center;
+  }
+  
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .how-it-works-container {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  
+  .directions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .logos-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .direction-tc-bg {
+    max-width: 150px;
+  }
+
+  .direction-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .direction-card .direction-badge { order: 1; margin-bottom: 12px; }
+  .direction-card .direction-card-title { order: 2; margin-bottom: 8px !important; margin-top: 0 !important; }
+  .direction-card .direction-image { order: 3; margin: 16px 0; }
+  .direction-card .direction-card-desc { order: 4; margin-bottom: 16px; }
+  .direction-card .direction-link { order: 5; }
+
+  .faq-container {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 16px 0;
+  }
+
+  .header.scrolled {
+    padding: 12px 0;
+  }
+
+  .header-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .header-right {
+    gap: 16px;
+  }
+
+  .header-right .btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .logo img {
+    height: 24px;
+  }
+
+  .header.scrolled .logo img {
+    height: 20px;
+  }
+
+  .hero-title {
+    font-size: 48px;
+  }
+  
+  .hero {
+    padding: 80px 0 40px;
+    background-image: none !important;
+    background-color: var(--color-navy);
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .logos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .testimonial-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 32px;
+  }
+
+  .testimonial-author {
+    text-align: left;
+  }
+
+  
+
+  .cta-buttons {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .cta-buttons .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-right .btn {
+    white-space: nowrap;
+  }
+
+  .current-lang {
+    display: flex;
+  }
+
+  .lang-options {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    margin: 0;
+    background-color: rgba(11, 27, 58, 0.98);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 0;
+    border-radius: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    min-width: 90px;
+  }
+
+  .lang-options .lang-btn {
+    width: 100%;
+    padding: 8px 24px;
+    background: transparent;
+    border: none;
+    text-align: left;
+  }
+
+  .lang-options .lang-btn:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .lang-options.show {
+    display: flex;
+  }
+
+  .separator {
+    display: none;
+  }
+
+  .hero-title {
+    font-size: 36px;
+  }
+  
+  .form-card {
+    padding: 24px;
+  }
+  
+  
+
+  
+
+  
+
+  
+
+  .logos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .problem-title,
+  .section-title,
+  .directions-title,
+  .teams-title,
+  .faq-title,
+  .cta-title {
+    font-size: 32px;
+    margin-bottom: 16px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+
+  .problem-section, .how-it-works-section, .directions-section, .teams-section, .faq-section, .cta-section { padding: 48px 0; }
+}
