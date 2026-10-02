@@ -26,16 +26,16 @@
     <!-- Header Area -->
     <header class="header">
       <div class="container header-container">
-        <a href="/" class="logo">
+        <a href="https://think4ever.com" class="logo">
           <img src="assets/images/logo.svg" alt="think4ever logo" />
         </a>
         <div class="header-right">
           <div class="language-selector">
-            <span class="current-lang">
+            <button class="current-lang" aria-haspopup="true" aria-expanded="false">
               <span class="current-lang-text">EN</span>
               <i class="ri-arrow-down-s-line"></i>
-            </span>
-            <div class="lang-options">
+            </button>
+              <div class="lang-options">
               <button class="lang-btn active" data-lang="en">EN</button>
               <span class="separator">|</span>
               <button class="lang-btn" data-lang="es">ES</button>
@@ -94,7 +94,7 @@
               <span data-i18n="feature_3">Minimize "context evaporation."</span>
             </li>
           </ul>
-          <a href="#" class="btn btn-outline" data-i18n="learn_more"
+          <a href="https://think4ever.com" class="btn btn-outline" data-i18n="learn_more"
             >Learn more</a
           >
         </div>
@@ -122,7 +122,7 @@
               <span data-i18n="or_register_email">or register with email</span>
             </div>
 
-            <form action="#" class="registration-form">
+            <form action="#" class="registration-form" id="signupForm">
               <div class="form-row">
                 <div class="form-group">
                   <label for="firstName" data-i18n="first_name"
@@ -218,7 +218,7 @@
 
               <div class="slider-captcha" id="captchaContainer">
                 <div class="slider-progress" id="captchaProgress"></div>
-                <div class="slider-thumb" id="captchaThumb">
+                <div class="slider-thumb" id="captchaThumb" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Slide to verify you are human">
                   <i class="ri-arrow-right-line"></i>
                 </div>
                 <span class="slider-text" id="captchaText"
@@ -235,7 +235,7 @@
                     any time. Optional - leaving this unticked won't affect your
                     account. See our</span
                   >
-                  <a href="#" data-i18n="privacy_policy">Privacy Policy</a>
+                  <a href="https://think4ever.com/privacy-policy" data-i18n="privacy_policy">Privacy Policy</a>
                   <span data-i18n="marketing_text_end"
                     >for how we handle your data.</span
                   >
@@ -246,9 +246,9 @@
                 <span data-i18n="terms_prefix"
                   >By creating an account, you agree to our</span
                 >
-                <a href="#" data-i18n="terms_link">Terms of Service</a>
+                <a href="https://think4ever.com/terms-and-conditions/" data-i18n="terms_link">Terms of Service</a>
                 <span data-i18n="and">and</span>
-                <a href="#" data-i18n="privacy_policy">Privacy Policy</a>.
+                <a href="https://think4ever.com/privacy-policy" data-i18n="privacy_policy">Privacy Policy</a>.
               </p>
 
               <button
@@ -263,7 +263,7 @@
                 <span data-i18n="already_have_account"
                   >Already have an account?</span
                 >
-                <a href="#" data-i18n="sign_in">Sign in</a>
+                <a href="https://portal.think4ever.com/#/login" data-i18n="sign_in">Sign in</a>
               </p>
             </form>
           </div>
@@ -507,7 +507,7 @@
                 alt="From design to code"
               />
             </div>
-            <a href="#" class="direction-link"
+            <a href="https://think4ever.com" class="direction-link"
               ><span data-i18n="learn_more">Learn more</span> →</a
             >
           </div>
@@ -530,7 +530,7 @@
                 alt="From code to design"
               />
             </div>
-            <a href="#" class="direction-link"
+            <a href="https://think4ever.com" class="direction-link"
               ><span data-i18n="learn_more">Learn more</span> →</a
             >
           </div>
@@ -694,10 +694,10 @@
           The free trial lasts 1 month.
         </p>
         <div class="cta-buttons">
-          <a href="#" class="btn btn-orange" data-i18n="start_free_trial"
+          <a href="#" class="btn btn-orange cta-trigger" data-i18n="start_free_trial"
             >Start your free trial</a
           >
-          <a href="#" class="btn btn-outline-white" data-i18n="learn_more"
+          <a href="https://think4ever.com" class="btn btn-outline-white" data-i18n="learn_more"
             >Learn more</a
           >
         </div>
@@ -719,11 +719,11 @@
         </div>
         <div class="footer-right">
           <ul class="footer-links">
-            <li><a href="#" data-i18n="privacy_policy">Privacy policy</a></li>
+            <li><a href="https://think4ever.com/privacy-policy" data-i18n="privacy_policy_footer">Privacy policy</a></li>
             <li>
               <a href="#" data-i18n="terms_conditions">Terms and conditions</a>
             </li>
-            <li><a href="#" data-i18n="contact">Contact</a></li>
+            <li><a href="https://think4ever.com/contact-us/" data-i18n="contact">Contact</a></li>
           </ul>
         </div>
       </div>
@@ -731,5 +731,158 @@
 
     <!-- JS Links -->
     <script src="assets/js/main.js"></script>
+  
+  <!-- CTA Modal -->
+  <div id="ctaModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button id="closeModal" class="modal-close" aria-label="Close modal">&times;</button>
+      <h2 id="modalTitle" class="sr-only">Sign up for Think4ever</h2>
+      <form action="#" class="registration-form" id="modalSignupForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="modal_firstName" data-i18n="first_name"
+                    >First Name</label
+                  >
+                  <input
+                    type="text"
+                    id="modal_firstName"
+                    placeholder="John"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="modal_lastName" data-i18n="last_name">Last Name</label>
+                  <input type="text" id="modal_lastName" placeholder="Doe" required />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="modal_email" data-i18n="email">Email *</label>
+                  <input
+                    type="email"
+                    id="modal_email"
+                    placeholder="you@company.com"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="modal_company" data-i18n="company_name"
+                    >Company Name</label
+                  >
+                  <input type="text" id="modal_company" placeholder="Acme Corp" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="modal_region" data-i18n="server_region"
+                  >Server Region</label
+                >
+                <select id="modal_region">
+                  <option value="us-east">US East</option>
+                  <option value="eu-west">EU West</option>
+                  <option value="ap-south">AP South</option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="modal_password" data-i18n="password">Password *</label>
+                  <input
+                    type="password"
+                    id="modal_password"
+                    placeholder="Create a strong password"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="modal_confirmPassword" data-i18n="confirm_password"
+                    >Confirm Password *</label
+                  >
+                  <input
+                    type="password"
+                    id="modal_confirmPassword"
+                    placeholder="Repeat your password"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="password-requirements">
+                <div class="req-item">
+                  <i class="ri-record-circle-line req-icon"></i
+                  ><span data-i18n="req_chars">At least 10 characters</span>
+                </div>
+                <div class="req-item">
+                  <i class="ri-record-circle-line req-icon"></i
+                  ><span data-i18n="req_upper">Uppercase letter</span>
+                </div>
+                <div class="req-item">
+                  <i class="ri-record-circle-line req-icon"></i
+                  ><span data-i18n="req_lower">Lowercase letter</span>
+                </div>
+                <div class="req-item">
+                  <i class="ri-record-circle-line req-icon"></i
+                  ><span data-i18n="req_number">Number</span>
+                </div>
+                <div class="req-item">
+                  <i class="ri-record-circle-line req-icon"></i
+                  ><span data-i18n="req_symbol">Symbol (!@#$...)</span>
+                </div>
+              </div>
+
+              <div class="slider-captcha" id="modal_captchaContainer">
+                <div class="slider-progress" id="modal_captchaProgress"></div>
+                <div class="slider-thumb" id="modal_captchaThumb" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Slide to verify you are human">
+                  <i class="ri-arrow-right-line"></i>
+                </div>
+                <span class="slider-text" id="modal_captchaText"
+                  >Slide right to verify you're <a href="#">human</a></span
+                >
+              </div>
+
+              <div class="checkbox-group">
+                <input type="checkbox" id="modal_marketing" />
+                <label for="modal_marketing">
+                  <span data-i18n="marketing_text"
+                    >I'd like to receive marketing emails - product updates,
+                    tips, and offers - from Think4ever. You can unsubscribe at
+                    any time. Optional - leaving this unticked won't affect your
+                    account. See our</span
+                  >
+                  <a href="https://think4ever.com/privacy-policy" data-i18n="privacy_policy">Privacy Policy</a>
+                  <span data-i18n="marketing_text_end"
+                    >for how we handle your data.</span
+                  >
+                </label>
+              </div>
+
+              <p class="terms-text">
+                <span data-i18n="terms_prefix"
+                  >By creating an account, you agree to our</span
+                >
+                <a href="https://think4ever.com/terms-and-conditions/" data-i18n="terms_link">Terms of Service</a>
+                <span data-i18n="and">and</span>
+                <a href="https://think4ever.com/privacy-policy" data-i18n="privacy_policy">Privacy Policy</a>.
+              </p>
+
+              <button
+                type="submit"
+                class="btn btn-submit"
+                data-i18n="submit_btn"
+              >
+                Bring harmony and coherence to your project.
+              </button>
+
+              <p class="login-link">
+                <span data-i18n="already_have_account"
+                  >Already have an account?</span
+                >
+                <a href="https://portal.think4ever.com/#/login" data-i18n="sign_in">Sign in</a>
+              </p>
+            </form>
+    </div>
+  </div>
+  
   </body>
 </html>

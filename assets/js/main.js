@@ -84,7 +84,7 @@ const translations = {
     cta_title: "Bring harmony and coherence<br>to your project.",
     cta_subtitle: "The free trial lasts 1 month.",
     copyright: "© 2026 Think4ever. All rights reserved.",
-    privacy_policy: "Privacy policy",
+    privacy_policy_footer: "Privacy policy",
     terms_conditions: "Terms and conditions",
     contact: "Contact"
   },
@@ -273,28 +273,55 @@ document.addEventListener('DOMContentLoaded', () => {
   
   langBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
-      // Remove active class from all
-      langBtns.forEach(b => b.classList.remove('active'));
-      // Add active class to clicked
-      e.target.classList.add('active');
-      
       // Get selected language
-      const lang = e.target.getAttribute('data-lang');
-      
-      // Update texts
-      updateLanguage(lang);
-
-      // Update mobile current lang text
-      const currentLangText = document.querySelector('.current-lang-text');
-      if (currentLangText) {
-        currentLangText.innerHTML = lang.toUpperCase();
-        const langOptions = document.querySelector('.lang-options');
-        const langSelector = document.querySelector('.language-selector');
-        if (langOptions) langOptions.classList.remove('show');
-        if (langSelector) langSelector.classList.remove('open');
+      let lang = e.target.getAttribute('data-lang');
+      if (!lang && e.target.closest('.lang-btn')) {
+        lang = e.target.closest('.lang-btn').getAttribute('data-lang');
       }
+      if (!lang) return;
+      
+      // Save manually selected language
+      localStorage.setItem('t4e_lang', lang);
+      applyLanguage(lang);
     });
   });
+
+  function applyLanguage(lang) {
+    // Update active class on buttons
+    langBtns.forEach(b => {
+      if (b.getAttribute('data-lang') === lang) {
+        b.classList.add('active');
+      } else {
+        b.classList.remove('active');
+      }
+    });
+
+    // Update texts
+    updateLanguage(lang);
+
+    // Update mobile current lang text
+    const currentLangText = document.querySelector('.current-lang-text');
+    if (currentLangText) {
+      currentLangText.innerHTML = lang.toUpperCase();
+      const langOptions = document.querySelector('.lang-options');
+      const langSelector = document.querySelector('.language-selector');
+      if (langOptions) langOptions.classList.remove('show');
+      if (langSelector) langSelector.classList.remove('open');
+    }
+  }
+
+  // Initial Language Load
+  const savedLang = localStorage.getItem('t4e_lang');
+  let initialLang = 'en';
+  if (savedLang && ['en', 'es', 'pt'].includes(savedLang)) {
+    initialLang = savedLang;
+  } else {
+    const browserLang = navigator.language.slice(0, 2).toLowerCase();
+    if (['en', 'es', 'pt'].includes(browserLang)) {
+      initialLang = browserLang;
+    }
+  }
+  applyLanguage(initialLang);
   
   function updateLanguage(lang) {
     const elements = document.querySelectorAll('[data-i18n]');
@@ -355,35 +382,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Captcha Slider Logic
-  const captchaContainer = document.getElementById('captchaContainer');
-  const captchaThumb = document.getElementById('captchaThumb');
-  const captchaProgress = document.getElementById('captchaProgress');
-  const captchaText = document.getElementById('captchaText');
-  const signupForm = document.getElementById('signupForm');
-  let isVerified = false;
-  let isDragging = false;
-  let startX = 0;
-  
-  if (captchaThumb && captchaContainer) {
+  // Reusable Captcha Slider Logic
+  const initDragSlider = (containerId, thumbId, progressId, textId, formId) => {
+    const container = document.getElementById(containerId);
+    const thumb = document.getElementById(thumbId);
+    const progress = document.getElementById(progressId);
+    const text = document.getElementById(textId);
+    const form = document.getElementById(formId);
+    
+    if (!thumb || !container) return;
+    
+    let isDragging = false;
+    let startX = 0;
+    
     const onMove = (e) => {
-      if (!isDragging || isVerified) return;
-      const maxDrag = captchaContainer.offsetWidth - 56;
+      if (!isDragging || thumb.classList.contains('verified')) return;
+      const maxDrag = container.offsetWidth - 56;
       let currentX = (e.clientX || (e.touches && e.touches[0].clientX)) - startX;
       if (currentX < 0) currentX = 0;
       if (currentX >= maxDrag) {
         currentX = maxDrag;
-        isVerified = true;
         
-        // Expand thumb to full width and center the tick
-        captchaThumb.style.transition = 'width 0.3s ease, transform 0.3s ease, background-color 0.3s ease';
-        captchaThumb.style.transform = `translateX(0px)`;
-        captchaThumb.style.width = '100%';
-        captchaThumb.classList.add('verified');
-        captchaThumb.innerHTML = '<i class="ri-check-line"></i>';
+        thumb.style.transition = 'width 0.3s ease, transform 0.3s ease, background-color 0.3s ease';
+        thumb.style.transform = `translateX(0px)`;
+        thumb.style.width = '100%';
+        thumb.classList.add('verified');
+        thumb.innerHTML = '<i class="ri-check-line"></i>';
         
-        if (captchaProgress) captchaProgress.style.opacity = '0'; // Hide progress since thumb fills it
-        if (captchaText) captchaText.style.opacity = '0';
+        if (progress) progress.style.opacity = '0';
+        if (text) text.style.opacity = '0';
         
         document.removeEventListener('mousemove', onMove);
         document.removeEventListener('mouseup', onStop);
@@ -391,19 +418,19 @@ document.addEventListener('DOMContentLoaded', () => {
         document.removeEventListener('touchend', onStop);
         return;
       }
-      captchaThumb.style.transform = `translateX(${currentX}px)`;
-      if (captchaProgress) captchaProgress.style.width = (currentX + 28) + 'px';
+      thumb.style.transform = `translateX(${currentX}px)`;
+      if (progress) progress.style.width = (currentX + 28) + 'px';
     };
 
     const onStop = () => {
-      if (!isVerified) {
-        captchaThumb.style.transform = 'translateX(0)';
-        captchaThumb.style.transition = 'transform 0.2s ease, background-color 0.2s ease';
-        if (captchaProgress) {
-          captchaProgress.style.width = '0';
-          captchaProgress.style.transition = 'width 0.2s ease, background-color 0.2s ease';
+      if (!thumb.classList.contains('verified')) {
+        thumb.style.transform = 'translateX(0)';
+        thumb.style.transition = 'transform 0.2s ease, background-color 0.2s ease';
+        if (progress) {
+          progress.style.width = '0';
+          progress.style.transition = 'width 0.2s ease, background-color 0.2s ease';
         }
-        if (captchaText) captchaText.style.opacity = '1';
+        if (text) text.style.opacity = '1';
       }
       isDragging = false;
       document.removeEventListener('mousemove', onMove);
@@ -413,11 +440,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const onStart = (e) => {
-      if (isVerified) return;
+      if (thumb.classList.contains('verified')) return;
       isDragging = true;
-      captchaThumb.style.transition = 'none';
-      if (captchaProgress) captchaProgress.style.transition = 'none';
-      if (captchaText) captchaText.style.opacity = '0';
+      thumb.style.transition = 'none';
+      if (progress) progress.style.transition = 'none';
+      if (text) text.style.opacity = '0';
       startX = e.clientX || (e.touches && e.touches[0].clientX);
       document.addEventListener('mousemove', onMove);
       document.addEventListener('mouseup', onStop);
@@ -425,34 +452,97 @@ document.addEventListener('DOMContentLoaded', () => {
       document.addEventListener('touchend', onStop);
     };
 
-    captchaThumb.addEventListener('mousedown', onStart);
-    captchaThumb.addEventListener('touchstart', onStart, {passive: true});
-  }
+    thumb.addEventListener('mousedown', onStart);
+    thumb.addEventListener('touchstart', onStart, {passive: true});
 
-  // Form Submission
-  if (signupForm) {
-    signupForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      if (!isVerified) {
-        console.error("Please slide to verify you're human.");
-        return;
-      }
-      
-      const inputs = signupForm.querySelectorAll('input, select');
-      const formDataObj = {};
-      inputs.forEach(input => {
-        const key = input.id || input.name || input.type;
-        if (input.type === 'checkbox') {
-          formDataObj[key] = input.checked;
-        } else {
-          formDataObj[key] = input.value;
+    // Form submission validation
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!thumb.classList.contains('verified')) {
+          console.error("Please slide to verify you're human.");
+          return;
         }
+        const inputs = form.querySelectorAll('input, select');
+        const formDataObj = {};
+        inputs.forEach(input => {
+          const key = input.id || input.name || input.type;
+          if (input.type === 'checkbox') {
+            formDataObj[key] = input.checked;
+          } else {
+            formDataObj[key] = input.value;
+          }
+        });
+        console.log(`Form (${formId}) Submitted successfully!`);
+        console.log('User Data:', formDataObj);
       });
-      
-      console.log('Form Submitted successfully!');
-      console.log('User Data:', formDataObj);
+    }
+  };
+
+  initDragSlider('captchaContainer', 'captchaThumb', 'captchaProgress', 'captchaText', 'signupForm');
+  initDragSlider('modal_captchaContainer', 'modal_captchaThumb', 'modal_captchaProgress', 'modal_captchaText', 'modalSignupForm');
+
+  // Removed old Form Submission since it's integrated above
+
+
+  // Modal Logic
+  const ctaTriggers = document.querySelectorAll('.cta-trigger');
+  const modal = document.getElementById('ctaModal');
+  const closeModal = document.getElementById('closeModal');
+  
+  if (modal && closeModal) {
+    const openModal = (e) => {
+      e.preventDefault();
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      closeModal.focus();
+    };
+    
+    const close = () => {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+    };
+    
+    ctaTriggers.forEach(btn => btn.addEventListener('click', openModal));
+    closeModal.addEventListener('click', close);
+    
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) close();
+    });
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) close();
     });
   }
 
+  // Keyboard accessibility for slider captchas
+  const initKeyboardSlider = (thumbId, containerId, progressId) => {
+    const thumb = document.getElementById(thumbId);
+    const container = document.getElementById(containerId);
+    const progress = document.getElementById(progressId);
+    if (!thumb || !container) return;
+    
+    thumb.addEventListener('keydown', (e) => {
+      if (thumb.classList.contains('verified')) return;
+      
+      if (e.key === ' ' || e.key === 'Enter' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        const maxDrag = container.offsetWidth - 56;
+        thumb.style.transition = 'width 0.3s ease, transform 0.3s ease, background-color 0.3s ease';
+        thumb.style.transform = `translateX(0px)`;
+        thumb.style.width = '100%';
+        thumb.classList.add('verified');
+        thumb.innerHTML = '<i class="ri-check-line"></i>';
+        
+        if (progress) progress.style.opacity = '0';
+        
+        // Find adjacent text
+        const text = container.querySelector('.slider-text');
+        if (text) text.style.opacity = '0';
+      }
+    });
+  };
+  
+  initKeyboardSlider('captchaThumb', 'captchaContainer', 'captchaProgress');
+  initKeyboardSlider('modal_captchaThumb', 'modal_captchaContainer', 'modal_captchaProgress');
 });
