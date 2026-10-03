@@ -266,7 +266,7 @@
                 <span data-i18n="already_have_account"
                   >Already have an account?</span
                 >
-                <a href="https://portal.think4ever.com/#/login" data-i18n="sign_in">Sign in</a>
+                <a href="#" class="login-trigger" data-i18n="sign_in">Sign in</a>
               </p>
             
 </div>
@@ -295,9 +295,71 @@
         </div>
       </div>
 
-    </form>
+    </form></div></div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle">
+      <button id="closeLoginModal" class="modal-close" aria-label="Close modal">&times;</button>
+      <h2 id="loginModalTitle" class="sr-only">Log in to Think4ever</h2>
+      
+      <form action="#" class="registration-form" id="loginForm">
+        <div class="step1-container" id="login_step1">
+          <div id="login_formError" style="color: #d93025; font-size: 14px; margin-bottom: 15px; display: none; padding: 10px; background: #fce8e6; border-radius: 6px;"></div>
+          
+          <h2 style="font-size: 24px; margin-bottom: 20px; color: var(--color-navy); text-align: center;">Welcome Back</h2>
+          
+          <div class="form-group">
+            <label for="login_email" data-i18n="email">Email *</label>
+            <input type="email" id="login_email" placeholder="you@company.com" required style="border: 1px solid var(--color-border); background: var(--color-white); color: var(--color-navy); box-shadow: 0 2px 4px rgba(0,0,0,0.02);" />
+          </div>
+
+          <div class="form-group">
+            <label for="login_password" data-i18n="password">Password *</label>
+            <input type="password" id="login_password" placeholder="Enter your password" required style="border: 1px solid var(--color-border); background: var(--color-white); color: var(--color-navy); box-shadow: 0 2px 4px rgba(0,0,0,0.02);" />
+          </div>
+
+          <button type="submit" class="btn btn-submit" style="width: 100%; margin-top: 10px;">
+            Log in
+          </button>
+          
+          <a class="btn-google" href="https://portal.think4ever.com/#/login?login=google" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 12px; border-radius: 8px; font-weight: 600; font-size: 16px; transition: all 0.3s ease; text-decoration: none; border: 1px solid var(--color-border); background: var(--color-white); color: var(--color-navy); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); margin-top: 15px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google logo" width="20" height="20">
+            Sign in with Google
+          </a>
+
+          <p class="login-link" style="text-align: center; margin-top: 20px; color: var(--color-gray);">
+            <span>Don't have an account?</span>
+            <a href="#" class="switch-to-signup" style="color: var(--color-blue); font-weight: 600;">Sign up</a>
+          </p>
+        </div>
+        
+        <div class="step2-container" id="login_step2" style="display: none; padding: 10px 0;">
+          <div class="otp-container">
+            <h3 class="otp-title">OTP Confirmation</h3>
+            <p class="otp-subtitle">We sent a 6-digit code to your email. Please enter it below to verify your account.</p>
+            
+            <div id="login_otpError" class="otp-error-msg"></div>
+            
+            <div class="otp-inputs" id="login_otpGroup">
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+            </div>
+            
+            <div class="otp-actions">
+              <button type="button" id="login_btnVerify" class="btn btn-primary" style="width: 100%;">Verify Code</button>
+              <button type="button" id="login_btnResend" class="btn btn-outline" style="width: 100%;">Resend Code</button>
+            </div>
           </div>
         </div>
+      </form>
+    </div>
+  </div>
+
       </div>
     </section>
 
@@ -911,7 +973,7 @@
                 <span data-i18n="already_have_account"
                   >Already have an account?</span
                 >
-                <a href="https://portal.think4ever.com/#/login" data-i18n="sign_in">Sign in</a>
+                <a href="#" class="login-trigger" data-i18n="sign_in">Sign in</a>
               </p>
             
 </div>

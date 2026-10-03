@@ -525,4 +525,43 @@ document.addEventListener('DOMContentLoaded', () => {
   
   initKeyboardSlider('captchaThumb', 'captchaContainer', 'captchaProgress');
   initKeyboardSlider('modal_captchaThumb', 'modal_captchaContainer', 'modal_captchaProgress');
+
+  const loginModal = document.getElementById('loginModal');
+  const closeLoginModal = document.getElementById('closeLoginModal');
+  const loginTriggers = document.querySelectorAll('.login-trigger');
+  const switchToSignup = document.querySelector('.switch-to-signup');
+
+  if (loginModal && closeLoginModal) {
+    const openLogin = (e) => {
+      e.preventDefault();
+      // Close signup modal if open
+      if (modal && modal.classList.contains('active')) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+      loginModal.classList.add('active');
+      loginModal.setAttribute('aria-hidden', 'false');
+    };
+    const closeLogin = () => {
+      loginModal.classList.remove('active');
+      loginModal.setAttribute('aria-hidden', 'true');
+    };
+    loginTriggers.forEach(btn => btn.addEventListener('click', openLogin));
+    closeLoginModal.addEventListener('click', closeLogin);
+    loginModal.addEventListener('click', (e) => {
+      if (e.target === loginModal) closeLogin();
+    });
+    
+    if (switchToSignup) {
+      switchToSignup.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeLogin();
+        if (modal) {
+          modal.classList.add('active');
+          modal.setAttribute('aria-hidden', 'false');
+        }
+      });
+    }
+  }
+
 });

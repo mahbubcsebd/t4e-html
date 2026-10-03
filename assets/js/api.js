@@ -261,4 +261,165 @@ document.addEventListener('DOMContentLoaded', () => {
   setupForm('signupForm', '', 'captchaThumb');
   setupForm('modalSignupForm', 'modal_', 'modal_captchaThumb');
 
+  // Setup Login Form
+  const setupLoginForm = () => {
+    const form = document.getElementById('loginForm');
+    if (!form) return;
+
+    const step1 = document.getElementById('login_step1');
+    const step2 = document.getElementById('login_step2');
+    const formError = document.getElementById('login_formError');
+    const otpError = document.getElementById('login_otpError');
+    
+    // OTP Inputs setup
+    const otpInputs = document.querySelectorAll('#login_otpGroup .otp-input');
+    const btnVerify = document.getElementById('login_btnVerify');
+    const btnResend = document.getElementById('login_btnResend');
+
+    otpInputs.forEach((input, index) => {
+      input.addEventListener('input', (e) => {
+        input.value = input.value.replace(/[^0-9]/g, '');
+        if (input.value.length === 1) {
+          if (index < otpInputs.length - 1) otpInputs[index + 1].focus();
+          else input.blur();
+        }
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !input.value && index > 0) otpInputs[index - 1].focus();
+      });
+      input.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const pastedData = (e.clipboardData || window.clipboardData).getData('text').replace(/[^0-9]/g, '');
+        if (pastedData) {
+          for (let i = 0; i < Math.min(pastedData.length, otpInputs.length - index); i++) {
+            otpInputs[index + i].value = pastedData[i];
+            if (index + i < otpInputs.length - 1) otpInputs[index + i + 1].focus();
+            else otpInputs[index + i].blur();
+          }
+        }
+      });
+    });
+
+    const getOtpCode = () => {
+      let code = '';
+      otpInputs.forEach(input => code += input.value);
+      return code;
+    };
+
+    let currentEmail = '';
+
+    const showError = (container, message) => {
+      container.innerText = message || 'An error occurred. Please try again.';
+      container.style.display = 'block';
+    };
+    const hideError = (container) => {
+      container.style.display = 'none';
+      container.innerText = '';
+    };
+
+    // Submit Login
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError(formError);
+      
+      const email = document.getElementById('login_email').value;
+      const password = document.getElementById('login_password').value;
+      
+      try {
+        const btnSubmit = form.querySelector('.btn-submit');
+        const originalText = btnSubmit.innerHTML;
+        btnSubmit.innerHTML = 'Logging in...';
+        btnSubmit.disabled = true;
+
+        const response = await fetch(`${API_BASE}/auth/login`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        btnSubmit.innerHTML = originalText;
+        btnSubmit.disabled = false;
+
+        if (response.status === 200) {
+          window.location.href = PORTAL_URL;
+        } else if (response.status === 403) {
+          const data = await response.json().catch(() => ({}));
+          if (data.requiresVerification) {
+            currentEmail = data.email || email;
+            step1.style.display = 'none';
+            step2.style.display = 'block';
+          } else {
+            showError(formError, data.error || 'Access denied.');
+          }
+        } else {
+          const data = await response.json().catch(() => ({}));
+          showError(formError, data.error || 'Invalid credentials. Please try again.');
+        }
+      } catch (err) {
+        showError(formError, 'Network error. Please check your connection.');
+      }
+    });
+
+    // Verify OTP
+    btnVerify.addEventListener('click', async () => {
+      hideError(otpError);
+      const code = getOtpCode();
+      if (!code || code.length !== 6) {
+        showError(otpError, 'Please enter a valid 6-digit code.');
+        return;
+      }
+      try {
+        btnVerify.innerHTML = 'Verifying...';
+        btnVerify.disabled = true;
+
+        const response = await fetch(`${API_BASE}/auth/verify-email-code`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ email: currentEmail, otp: code })
+        });
+
+        btnVerify.innerHTML = 'Verify Code';
+        btnVerify.disabled = false;
+
+        if (response.status === 200) {
+          window.location.href = PORTAL_URL;
+        } else {
+          const data = await response.json().catch(() => ({}));
+          showError(otpError, data.error || 'Invalid or expired code.');
+        }
+      } catch (err) {
+        showError(otpError, 'Network error. Please check your connection.');
+      }
+    });
+
+    // Resend OTP
+    btnResend.addEventListener('click', async () => {
+      hideError(otpError);
+      try {
+        btnResend.innerHTML = 'Sending...';
+        btnResend.disabled = true;
+        await fetch(`${API_BASE}/auth/resend-verification`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ email: currentEmail })
+        });
+        btnResend.innerHTML = 'Code Sent!';
+        setTimeout(() => {
+          btnResend.innerHTML = 'Resend Code';
+          btnResend.disabled = false;
+        }, 3000);
+      } catch (err) {
+        showError(otpError, 'Network error.');
+        btnResend.innerHTML = 'Resend Code';
+        btnResend.disabled = false;
+      }
+    });
+  };
+
+  setupLoginForm();
+
+
 });
