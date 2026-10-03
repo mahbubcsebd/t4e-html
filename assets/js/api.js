@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. Setup Google Login links dynamically
   const googleLinks = document.querySelectorAll('.btn-google');
   googleLinks.forEach(link => {
-    let googleUrl = `${PORTAL_URL}?login=google`;
+    let googleUrl = `https://portal.think4ever.com/#/login?login=google`;
     if (ref_key) googleUrl += `&ref=${encodeURIComponent(ref_key)}`;
     if (invite_token) googleUrl += `&inv=${encodeURIComponent(invite_token)}`;
     
