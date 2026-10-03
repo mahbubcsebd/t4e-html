@@ -456,27 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
     thumb.addEventListener('touchstart', onStart, {passive: true});
 
     // Form submission validation
-    if (form) {
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (!thumb.classList.contains('verified')) {
-          console.error("Please slide to verify you're human.");
-          return;
-        }
-        const inputs = form.querySelectorAll('input, select');
-        const formDataObj = {};
-        inputs.forEach(input => {
-          const key = input.id || input.name || input.type;
-          if (input.type === 'checkbox') {
-            formDataObj[key] = input.checked;
-          } else {
-            formDataObj[key] = input.value;
-          }
-        });
-        console.log(`Form (${formId}) Submitted successfully!`);
-        console.log('User Data:', formDataObj);
-      });
-    }
+    // Dummy form submit handler removed
   };
 
   initDragSlider('captchaContainer', 'captchaThumb', 'captchaProgress', 'captchaText', 'signupForm');
