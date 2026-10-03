@@ -18,7 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let googleUrl = `${PORTAL_URL}?login=google`;
     if (ref_key) googleUrl += `&ref=${encodeURIComponent(ref_key)}`;
     if (invite_token) googleUrl += `&inv=${encodeURIComponent(invite_token)}`;
+    
+    if (utm_source) googleUrl += `&utm_source=${encodeURIComponent(utm_source)}`;
+    if (utm_medium) googleUrl += `&utm_medium=${encodeURIComponent(utm_medium)}`;
+    if (utm_campaign) googleUrl += `&utm_campaign=${encodeURIComponent(utm_campaign)}`;
+    if (utm_term) googleUrl += `&utm_term=${encodeURIComponent(utm_term)}`;
+    if (utm_content) googleUrl += `&utm_content=${encodeURIComponent(utm_content)}`;
     link.setAttribute('href', googleUrl);
+
   });
 
   // 3. Setup form submission logic
@@ -84,15 +91,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Build payload
       const payload = {
-        first_name: firstName,
-        last_name: lastName,
         email: email,
         password: password,
-        eula_accepted: true, // required by API
-        company: company,
-        region: region,
+        eula_accepted: true,
         marketing_opt_in: marketing_opt_in,
       };
+      if (firstName) payload.first_name = firstName;
+      if (lastName) payload.last_name = lastName;
+      if (company) payload.company = company;
+      if (region) payload.region = region;
 
       if (utm_source) payload.utm_source = utm_source;
       if (utm_medium) payload.utm_medium = utm_medium;
@@ -111,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const response = await fetch(`${API_BASE}/auth/register`, {
           method: 'POST',
           credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify(payload)
         });
 
@@ -154,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const response = await fetch(`${API_BASE}/auth/verify-email-code`, {
           method: 'POST',
           credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify({ email: currentEmail, otp: code })
         });
 
@@ -187,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const response = await fetch(`${API_BASE}/auth/resend-verification`, {
           method: 'POST',
           credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify({ email: currentEmail })
         });
 
