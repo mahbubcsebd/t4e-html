@@ -38,10 +38,56 @@ document.addEventListener('DOMContentLoaded', () => {
     const formError = document.getElementById(`${prefix}formError`);
     const otpError = document.getElementById(`${prefix}otpError`);
     
-    const otpCode = document.getElementById(`${prefix}otpCode`);
+    
+    const otpInputs = document.querySelectorAll(`#${prefix}otpGroup .otp-input`);
     const btnVerify = document.getElementById(`${prefix}btnVerify`);
     const btnResend = document.getElementById(`${prefix}btnResend`);
     const sliderThumb = document.getElementById(sliderThumbId);
+
+    // Setup OTP Inputs behavior
+    otpInputs.forEach((input, index) => {
+      input.addEventListener('input', (e) => {
+        // Only allow numbers
+        input.value = input.value.replace(/[^0-9]/g, '');
+        
+        if (input.value.length === 1) {
+          if (index < otpInputs.length - 1) {
+            otpInputs[index + 1].focus();
+          } else {
+            input.blur();
+          }
+        }
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !input.value && index > 0) {
+          otpInputs[index - 1].focus();
+        }
+      });
+      
+      // Handle paste
+      input.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const pastedData = (e.clipboardData || window.clipboardData).getData('text').replace(/[^0-9]/g, '');
+        if (pastedData) {
+          for (let i = 0; i < Math.min(pastedData.length, otpInputs.length - index); i++) {
+            otpInputs[index + i].value = pastedData[i];
+            if (index + i < otpInputs.length - 1) {
+              otpInputs[index + i + 1].focus();
+            } else {
+              otpInputs[index + i].blur();
+            }
+          }
+        }
+      });
+    });
+
+    const getOtpCode = () => {
+      let code = '';
+      otpInputs.forEach(input => code += input.value);
+      return code;
+    };
+
 
     // Save email for step 2
     let currentEmail = '';
@@ -147,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Step 2: Verify Code
     btnVerify.addEventListener('click', async () => {
       hideError(otpError);
-      const code = otpCode.value.trim();
+      const code = getOtpCode();
       
       if (!code || code.length !== 6) {
         showError(otpError, 'Please enter a valid 6-digit code.');

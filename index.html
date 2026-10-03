@@ -271,20 +271,31 @@
             
 </div>
 
-    <div class="step2-container" id="step2" style="display: none; text-align: center; padding: 20px;">
-      <h3 style="margin-bottom: 15px;">Verify your email</h3>
-      <p style="margin-bottom: 20px; font-size: 14px; color: var(--color-text-light);">We sent a 6-digit code to your email. Please enter it below.</p>
-      
-      <div class="form-group" style="margin-bottom: 20px;">
-        <input type="text" id="otpCode" placeholder="123456" maxlength="6" style="text-align: center; font-size: 24px; letter-spacing: 5px;" />
+    
+      <div class="step2-container" id="step2" style="display: none; padding: 10px 0;">
+        <div class="otp-container">
+          <h3 class="otp-title">OTP Confirmation</h3>
+          <p class="otp-subtitle">We sent a 6-digit code to your email. Please enter it below to verify your account.</p>
+          
+          <div id="otpError" class="otp-error-msg"></div>
+          
+          <div class="otp-inputs" id="otpGroup">
+            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+          </div>
+          
+          <div class="otp-actions">
+            <button type="button" id="btnVerify" class="btn btn-primary" style="width: 100%;">Verify Code</button>
+            <button type="button" id="btnResend" class="btn btn-outline" style="width: 100%;">Resend Code</button>
+          </div>
+        </div>
       </div>
-      
-      <div id="otpError" style="color: #d93025; font-size: 14px; margin-bottom: 15px; display: none;"></div>
-      
-      <button type="button" id="btnVerify" class="btn btn-primary" style="width: 100%; margin-bottom: 15px;">Verify Code</button>
-      <button type="button" id="btnResend" class="btn btn-outline" style="width: 100%;">Resend Code</button>
-    </div>
-  </form>
+
+    </form>
           </div>
         </div>
       </div>
@@ -905,20 +916,31 @@
             
 </div>
 
-    <div class="step2-container" id="modal_step2" style="display: none; text-align: center; padding: 20px;">
-      <h3 style="margin-bottom: 15px;">Verify your email</h3>
-      <p style="margin-bottom: 20px; font-size: 14px; color: var(--color-text-light);">We sent a 6-digit code to your email. Please enter it below.</p>
-      
-      <div class="form-group" style="margin-bottom: 20px;">
-        <input type="text" id="modal_otpCode" placeholder="123456" maxlength="6" style="text-align: center; font-size: 24px; letter-spacing: 5px;" />
+    
+      <div class="step2-container" id="modal_step2" style="display: none; padding: 10px 0;">
+        <div class="otp-container">
+          <h3 class="otp-title">OTP Confirmation</h3>
+          <p class="otp-subtitle">We sent a 6-digit code to your email. Please enter it below to verify your account.</p>
+          
+          <div id="modal_otpError" class="otp-error-msg"></div>
+          
+          <div class="otp-inputs" id="modal_otpGroup">
+            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" inputmode="numeric" />
+          </div>
+          
+          <div class="otp-actions">
+            <button type="button" id="modal_btnVerify" class="btn btn-primary" style="width: 100%;">Verify Code</button>
+            <button type="button" id="modal_btnResend" class="btn btn-outline" style="width: 100%;">Resend Code</button>
+          </div>
+        </div>
       </div>
-      
-      <div id="modal_otpError" style="color: #d93025; font-size: 14px; margin-bottom: 15px; display: none;"></div>
-      
-      <button type="button" id="modal_btnVerify" class="btn btn-primary" style="width: 100%; margin-bottom: 15px;">Verify Code</button>
-      <button type="button" id="modal_btnResend" class="btn btn-outline" style="width: 100%;">Resend Code</button>
-    </div>
-  </form>
+
+            </form>
     </div>
   </div>
   
