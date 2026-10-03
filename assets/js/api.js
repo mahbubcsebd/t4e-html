@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const utm_content = urlParams.get('utm_content') || '';
 
   // 2. Setup Google Login links dynamically
-  const googleLinks = document.querySelectorAll('.social-btn');
+  const googleLinks = document.querySelectorAll('.btn-google');
   googleLinks.forEach(link => {
     let googleUrl = `${PORTAL_URL}?login=google`;
     if (ref_key) googleUrl += `&ref=${encodeURIComponent(ref_key)}`;
