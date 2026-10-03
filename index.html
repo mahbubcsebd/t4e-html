@@ -1007,5 +1007,55 @@
   </div>
   
     <script src="assets/js/api.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const loginModal = document.getElementById('loginModal');
+  const signupModal = document.getElementById('ctaModal');
+  
+  // Attach to all login triggers
+  document.querySelectorAll('.login-trigger').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (signupModal) {
+        signupModal.classList.remove('active');
+        signupModal.setAttribute('aria-hidden', 'true');
+      }
+      if (loginModal) {
+        loginModal.classList.add('active');
+        loginModal.setAttribute('aria-hidden', 'false');
+      }
+    });
+  });
+
+  // Attach to close login modal
+  const closeBtn = document.getElementById('closeLoginModal');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      if (loginModal) {
+        loginModal.classList.remove('active');
+        loginModal.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
+
+  // Attach to switch to signup
+  const switchBtn = document.querySelector('.switch-to-signup');
+  if (switchBtn) {
+    switchBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (loginModal) {
+        loginModal.classList.remove('active');
+        loginModal.setAttribute('aria-hidden', 'true');
+      }
+      if (signupModal) {
+        signupModal.classList.add('active');
+        signupModal.setAttribute('aria-hidden', 'false');
+      }
+    });
+  }
+});
+</script>
 </body>
+
 </html>
