@@ -123,6 +123,9 @@
             </div>
 
             <form action="#" class="registration-form" id="signupForm">
+<div class="step1-container" id="step1">
+<div id="formError" style="color: #d93025; font-size: 14px; margin-bottom: 15px; display: none; padding: 10px; background: #fce8e6; border-radius: 6px;"></div>
+
               <div class="form-row">
                 <div class="form-group">
                   <label for="firstName" data-i18n="first_name"
@@ -265,7 +268,23 @@
                 >
                 <a href="https://portal.think4ever.com/#/login" data-i18n="sign_in">Sign in</a>
               </p>
-            </form>
+            
+</div>
+
+    <div class="step2-container" id="step2" style="display: none; text-align: center; padding: 20px;">
+      <h3 style="margin-bottom: 15px;">Verify your email</h3>
+      <p style="margin-bottom: 20px; font-size: 14px; color: var(--color-text-light);">We sent a 6-digit code to your email. Please enter it below.</p>
+      
+      <div class="form-group" style="margin-bottom: 20px;">
+        <input type="text" id="otpCode" placeholder="123456" maxlength="6" style="text-align: center; font-size: 24px; letter-spacing: 5px;" required />
+      </div>
+      
+      <div id="otpError" style="color: #d93025; font-size: 14px; margin-bottom: 15px; display: none;"></div>
+      
+      <button type="button" id="btnVerify" class="btn btn-primary" style="width: 100%; margin-bottom: 15px;">Verify Code</button>
+      <button type="button" id="btnResend" class="btn btn-outline" style="width: 100%;">Resend Code</button>
+    </div>
+  </form>
           </div>
         </div>
       </div>
@@ -738,6 +757,9 @@
       <button id="closeModal" class="modal-close" aria-label="Close modal">&times;</button>
       <h2 id="modalTitle" class="sr-only">Sign up for Think4ever</h2>
       <form action="#" class="registration-form" id="modalSignupForm">
+<div class="step1-container" id="modal_step1">
+<div id="modal_formError" style="color: #d93025; font-size: 14px; margin-bottom: 15px; display: none; padding: 10px; background: #fce8e6; border-radius: 6px;"></div>
+
               <div class="form-row">
                 <div class="form-group">
                   <label for="modal_firstName" data-i18n="first_name"
@@ -880,9 +902,26 @@
                 >
                 <a href="https://portal.think4ever.com/#/login" data-i18n="sign_in">Sign in</a>
               </p>
-            </form>
+            
+</div>
+
+    <div class="step2-container" id="modal_step2" style="display: none; text-align: center; padding: 20px;">
+      <h3 style="margin-bottom: 15px;">Verify your email</h3>
+      <p style="margin-bottom: 20px; font-size: 14px; color: var(--color-text-light);">We sent a 6-digit code to your email. Please enter it below.</p>
+      
+      <div class="form-group" style="margin-bottom: 20px;">
+        <input type="text" id="modal_otpCode" placeholder="123456" maxlength="6" style="text-align: center; font-size: 24px; letter-spacing: 5px;" required />
+      </div>
+      
+      <div id="modal_otpError" style="color: #d93025; font-size: 14px; margin-bottom: 15px; display: none;"></div>
+      
+      <button type="button" id="modal_btnVerify" class="btn btn-primary" style="width: 100%; margin-bottom: 15px;">Verify Code</button>
+      <button type="button" id="modal_btnResend" class="btn btn-outline" style="width: 100%;">Resend Code</button>
+    </div>
+  </form>
     </div>
   </div>
   
-  </body>
+    <script src="assets/js/api.js"></script>
+</body>
 </html>
