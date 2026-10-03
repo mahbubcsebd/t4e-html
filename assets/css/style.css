@@ -1325,39 +1325,42 @@ select {
   flex-direction: column;
   align-items: center;
   margin-top: 10px;
+  width: 100%;
 }
 .otp-title {
   font-size: 24px;
   font-weight: 700;
-  color: var(--color-white);
   margin-bottom: 12px;
+  color: var(--color-white);
+}
+.modal-content .otp-title {
+  color: var(--color-navy);
 }
 .otp-subtitle {
   font-size: 14px;
   color: var(--color-gray);
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   text-align: center;
-  max-width: 90%;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 .otp-inputs {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
+  width: 100%;
 }
 .otp-input {
-  width: 48px;
-  height: 56px;
+  width: 45px;
+  height: 52px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.05);
   text-align: center;
   font-size: 24px;
   font-weight: 600;
   color: var(--color-white);
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 0;
 }
 .otp-input:focus {
@@ -1366,6 +1369,20 @@ select {
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.2);
 }
+
+/* Modal specific inputs (Light Theme) */
+.modal-content .otp-input {
+  border: 1px solid var(--color-border);
+  background: var(--color-white);
+  color: var(--color-navy);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+.modal-content .otp-input:focus {
+  border-color: var(--color-primary);
+  background: var(--color-white);
+  box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.15);
+}
+
 .otp-input::-webkit-outer-spin-button,
 .otp-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -1377,18 +1394,28 @@ select {
   margin-bottom: 20px;
   display: none;
   background: rgba(239, 68, 68, 0.1);
-  padding: 12px 16px;
+  padding: 10px 15px;
   border-radius: 6px;
   border: 1px solid rgba(239, 68, 68, 0.2);
   width: 100%;
-  max-width: 320px;
-  text-align: left;
+  text-align: center;
 }
 .otp-actions {
   width: 100%;
-  max-width: 320px;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .otp-inputs {
+    gap: 6px;
+  }
+  .otp-input {
+    width: 40px;
+    height: 48px;
+    font-size: 20px;
+  }
+}
